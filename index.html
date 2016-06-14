@@ -95,45 +95,12 @@
             </section> -->
 
             <section>
-                <h2>A bit of history</h2>
-                <img width="900" data-src="images/module1-history.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
-            </section>
-
-            <section>
-                <h2>Intermodal shipping</h2>
-                <img width="1200" data-src="images/module1-intermodal-shipping.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
-            </section>
-
-            <section>
-                <h2>Containers for applications - <br> "Black box"</h2>
-                <img width="1200" data-src="images/module1-container-solution.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
-            </section>
-
-            <section>
-                <h2>Why is the black box so magical?</h2><br>
-                <ul>
-                    <img width="600" rotate=50 data-src="images/module1-bsd-jail.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
-                </ul>
-            </section>
-
-            <section>
-                <h2>Why is the black box so magical?</h2><br>
-                <ul>
-                    <li class="fragment">You don't care what's in it!</li>
-                    <li class="fragment">You can have a generic set of tools allowing to manage any black box</li>
-                    <li  class="fragment">This reduces the cost of having more units of deployment...</li>
-                    <li  class="fragment">...and also makes polyglot environments easier to manage</li>
-                </ul>
+                <h2>Container</h2>
+                <img width="1200" data-src="images/container.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
             </section>
 
             <section>
                 <h2>Why not VMs?</h2>
-                <ul>
-                    <li class="fragment">They can work as a black box deployment unit after all!</li>
-                    <li class="fragment">But they are comparitively much larger...</li>
-                    <li class="fragment">...and slow...</li>
-                    <li class="fragment">...and expensive</li>
-                </ul>
             </section>
 <!--
             <section>
@@ -148,19 +115,6 @@
                 <h2>Containers as lightweight VMs</h2>
                 <img width="900" data-src="images/module1-container-vs-vms.jpg" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
                 <small style="padding-top : 10px">Image source: https://www.docker.com/whatisdocker</small>
-            </section>
-
-            <section>
-                <h2>Containers from a distance</h2> <br>
-                <p><strong>Looks like a VM.....</strong></p>
-                <ul>
-                    <li>I can SSH into the container</li>
-                    <li>I have root access</li>
-                    <li>I can install packages</li>
-                    <li>I can mount filesystems</li>
-                    <li>I have my own eth0 interface</li>
-                    <li>I can alter iptables rules, and the routing table</li>
-                </ul>
             </section>
 
             <section>
@@ -192,12 +146,17 @@
             </section>
 
             <section>
+                <h2>Docker architecture</h2>
+                <img width="1400" data-src="images/module1-docker-architecture.svg" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+                <small style="padding-top : 40px">Image source: https://docs.docker.com/introduction/understanding-docker/</small>
+            </section>
+
+            <section>
                 <h2>Why is Docker creating waves?</h2>
                 <br>
                 <ul>
                     <li class="fragment">Making containers easy to use</li>
                     <li class="fragment">Commoditization of container images</li>
-                    <li class="fragment">Good, pluggable model allowing for multiple vendors to get involved</li>
                     <li class="fragment">Decent APIs, which allow the creation of higher-abstraction tools</li>
                     <li class="fragment">Coming at the same time as/reinforcing the ideas behind microservices</li>
                 </ul>
@@ -214,7 +173,7 @@
 
                 <p class="fragment">See <a href="https://twitter.com/solomonstre/status/530537767122784256">this twitter thread</a>  from Solomon Hykes for more...</p>
             </section> -->
-
+<!-- 
             <section>
                 <h2>Docker Images</h2>
                 <ul>
@@ -242,7 +201,7 @@
                         <li>If you change an image, a new layer is added to the top without replacing the whole image like you would have to with a VM image.</li>
                         <li>Docker images become your production artifacts that you deploy to your environments</li>
                     </aside>
-            </section>
+            </section> -->
 
             <section>
                 <h2>Building images with a Dockerfile</h2>
@@ -365,12 +324,6 @@ CMD ["nginx", "-g", "daemon off;"]</code></pre>
                         See: https://www.docker.com/products/docker-trusted-registry
 
                     </aside>
-            </section>
-
-            <section>
-                <h2>Docker architecture</h2>
-                <img width="1400" data-src="images/module1-docker-architecture.svg" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
-                <small style="padding-top : 40px">Image source: https://docs.docker.com/introduction/understanding-docker/</small>
             </section>
 
             <section id="module-2" class="title">
