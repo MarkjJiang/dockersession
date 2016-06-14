@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Docker</title>
+
+    <meta name="description" content="Docker">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/thoughtworks.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="footer">
+            Copyright (c) ThoughtWorks 2015-2016.  Provided for personal use only and not to be copied or distributed.
+        </div>
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+
+            <section class="title">
+                <h1>Docker in Practice</h2>
+            </section>
+
+            <section>
+                <h2>Topic</h2>
+                <ul>
+                    <li>What is Docker</li>
+                    <li>How to use Docker in our project</li>
+                </ul>
+            </section>
+
+            <section id="module-1" class="title">
+                <h1>Topic 1</h1>
+                <h3>What is Docker</h3>
+            </section>
+
+            <!-- <section>
+                <h2>Application trends</h2>
+                <br>
+                <ul>
+                    Applications used to be:
+                    <ul>
+                        <li class="fragment">Nearly always monolithic</li>
+                        <li class="fragment">Tightly coupled</li>
+                        <li class="fragment">Slow to change</li></ul> <br>
+                    </li>
+                    Today applications are:
+                    <ul>
+                        <li class="fragment">Decoupled</li>
+                        <li class="fragment">Often changing</li>
+                        <li class="fragment">Being provisoned more dynamically</li> </ul>
+                    </ul>
+                    <br>
+            </section> -->
+
+            <section>
+                <h2>Application trends</h2>
+                <img width="900" data-src="images/module1-then-now.jpg" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Challenges with modern architectures</h2>
+                <br>
+                <ul>
+                    <li class="fragment">Multiple tech stacks</li>
+                    <li class="fragment">Expect to be able to provision instances dynamically</li>
+                    <li class="fragment">Lots of moving parts</li>
+                    <li class="fragment">Complex infrastructure for the operations folks to manage</li>
+                    <br>
+            </section>
+
+            <section>
+                <h2>A bit of history</h2>
+                <img width="900" data-src="images/module1-history.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Intermodal shipping</h2>
+                <img width="1200" data-src="images/module1-intermodal-shipping.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Containers for applications - <br> "Black box"</h2>
+                <img width="1200" data-src="images/module1-container-solution.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Why is the black box so magical?</h2><br>
+                <ul>
+                    <img width="600" rotate=50 data-src="images/module1-bsd-jail.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+                </ul>
+            </section>
+
+            <section>
+                <h2>Why is the black box so magical?</h2><br>
+                <ul>
+                    <li class="fragment">You don't care what's in it!</li>
+                    <li class="fragment">You can have a generic set of tools allowing to manage any black box</li>
+                    <li  class="fragment">This reduces the cost of having more units of deployment...</li>
+                    <li  class="fragment">...and also makes polyglot environments easier to manage</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Why not VMs?</h2>
+                <ul>
+                    <li class="fragment">They can work as a black box deployment unit after all!</li>
+                    <li class="fragment">But they are comparitively much larger...</li>
+                    <li class="fragment">...and slow...</li>
+                    <li class="fragment">...and expensive</li>
+                </ul>
+            </section>
+<!--
+            <section>
+                <h2>So why are containers different?</h2>
+                <ul>
+                    <li class="fragment">All containers share a kernel!</li>
+                    <li class="fragment">The same kernel provides isolation between containers, replacing the use of a hypervisor in normal virtualisation</li>
+                </ul>
+            </section> -->
+
+            <section>
+                <h2>Containers as lightweight VMs</h2>
+                <img width="900" data-src="images/module1-container-vs-vms.jpg" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+                <small style="padding-top : 10px">Image source: https://www.docker.com/whatisdocker</small>
+            </section>
+
+            <section>
+                <h2>Containers from a distance</h2> <br>
+                <p><strong>Looks like a VM.....</strong></p>
+                <ul>
+                    <li>I can SSH into the container</li>
+                    <li>I have root access</li>
+                    <li>I can install packages</li>
+                    <li>I can mount filesystems</li>
+                    <li>I have my own eth0 interface</li>
+                    <li>I can alter iptables rules, and the routing table</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>So, why do we need Docker?</h2><br>
+                <img width="1000" data-src="images/module1-before-docker.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Why Docker?</h2>
+                <br>
+                <p style="text-align: left">
+                    We know that containers have been around for a while.
+                    For example, <a href="https://linuxcontainers.org/" target="_blank">LXC</a>, <a href="https://en.wikipedia.org/wiki/FreeBSD_jail" target="
+                    ">BSD Jails</a>, <a href="https://docs.oracle.com/cd/E18440_01/doc.111/e18415/chapter_zones.htm" target="_blank">Solaris Zones</a>...
+                    <br><br>
+                    <strong>So, what was missing?</strong>
+                </p>
+                <ul>
+                    <li class="fragment">Containers did not have a standard format...</li>
+                    <li class="fragment">...which meant that containers were not portable</li>
+                    <li class="fragment">Standard tooling was missing, so you were on your own with networking</li>
+                    <li class="fragment">No emphasis on re-use of components/APIs</li>
+                    <br>
+            </section>
+
+
+            <section>
+                <h2>What is Docker?</h2>
+                <img width="900" data-src="images/module1-what-is-docker.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Why is Docker creating waves?</h2>
+                <br>
+                <ul>
+                    <li class="fragment">Making containers easy to use</li>
+                    <li class="fragment">Commoditization of container images</li>
+                    <li class="fragment">Good, pluggable model allowing for multiple vendors to get involved</li>
+                    <li class="fragment">Decent APIs, which allow the creation of higher-abstraction tools</li>
+                    <li class="fragment">Coming at the same time as/reinforcing the ideas behind microservices</li>
+                </ul>
+                <br>
+            </section>
+
+            <!-- <section>
+                <h2>Key tenets of docker</h2>
+                <ul>
+                    <li class="fragment">"Batteries included, but removable. Docker should ship a default swappable implementation good enough for the 80% case"</li>
+                    <li class="fragment">"Infrastructure should be pluggable and composable in the extreme via drivers & plugins"</li>
+                    <li class="fragment">"Developers and Ops are equally important users. It is possible and necessary to make both happy."</li>
+                </ul>
+
+                <p class="fragment">See <a href="https://twitter.com/solomonstre/status/530537767122784256">this twitter thread</a>  from Solomon Hykes for more...</p>
+            </section> -->
+
+            <section>
+                <h2>Docker Images</h2>
+                <ul>
+                    <li class="fragment">Images:</li>
+                    <ul>
+                        <span class="fragment">... read-only templates that are used to create containers</span><br/>
+                        <span class="fragment">... constructed from layered filesystems</span><br/>
+                        <span class="fragment">... each layer adds to or replaces part of the filesystem below it</span>
+                    </ul>
+                    <li class="fragment">Images typically contain:</li>
+                    <ul>
+                        <span class="fragment">... a lightweight OS distribution</span><br/>
+                        <span class="fragment">... dependencies</span><br/>
+                        <span class="fragment">... a single application or service</span>
+                    </ul>
+                    <li class="fragment">You can find images in public registries (e.g. Docker Hub)</li>
+                    <ul>
+                        <span class="fragment">... or you even build your own!</span>
+                    </ul>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>You can think of a Docker image like a mini VM image, except that it does not need a full-blown OS and have special disk space sharing benefits.</li>
+                        <li>Due to the layer aspect of images (using a uniion filesystem) images are efficient in that layers can be shared between images and containers.</li>
+                        <li>If you change an image, a new layer is added to the top without replacing the whole image like you would have to with a VM image.</li>
+                        <li>Docker images become your production artifacts that you deploy to your environments</li>
+                    </aside>
+            </section>
+
+            <section>
+                <h2>Building images with a Dockerfile</h2>
+                <ul>
+                    <li class="fragment">Build Docker images using a <code>Dockerfile</code> and the <code>docker build</code> command</li></li>
+                    <li class="fragment">1. Create a <code>Dockerfile</code>:<br/>
+                        <pre><code content-trim class="sh">FROM debian:8
+MAINTAINER John Citizen
+RUN apt-get update && \
+apt-get install -y nginx
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]</code></pre>
+                        </li>
+                        <li class="fragment">2. Build the image:<br/>
+                            <pre><code content-trim class="sh">$ docker build -t nginx-demo .  # Where `.` is the directory containing the `Dockerfile`</code></pre></li>
+                            <li class="fragment">3. Run in a container:
+                                <pre><code content-trim class="sh">$ docker run -d -p 8080:80 nginx-demo</code></pre></li>
+                            </ul>
+                            <aside class="notes">
+                                <ul>
+                                    <li>See images available on your Docker host with the `docker images` command.</li>
+                                    <li>Docker has been pre-installed on the VM - it comes with a command-line tool named `docker`.</li>
+                            </aside>
+            </section>
+
+            <section>
+                <h2>Image produced from Docker build </h2>
+                <img width="" data-src="images/module2-docker-image-layers-history.png" alt="Image Layers Complete" style="box-shadow: none; border:0" />
+                <aside class="notes">
+                    <ul>
+                        <li>Each stanza in the Dockerfile produces a new layer (there is a maximum of 127 layers)</li>
+                        <li>Some layers are 0B in size.  These are "noop" layers and contribute to the image metadata rather than content on the filesystem.</li>
+                        <li>You can see this metadata by running `docker inspect [image_id]`.</li>
+                        <li>Layers are read-only and allow for sharing of content (libs, dependencies) between images.</li>
+                        <li>In our example, the base layers (green) came from the `FROM debian:8` stanza and will be shared amongst all images we build from the same base image.</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Slow motion replay...</h2>
+                <img class="fragment" width="" data-src="images/module2-docker-image-layers-1.png" alt="Image Layers 1" style="box-shadow: none; border:0" />
+                <aside class="notes">
+                    <ul>
+                        <li>Let's see how the image was built up step-by-step.</li>
+                        <li>Our image is baded on the already-built debian:8 image</li>
+                        <li>If this image is not present on our Docker host then it will be pulling from a Docker registry</li>
+                        <li>FYI: debian:8 itself was also built using a Dockerfile but it simply started with an empty filesystem (FROM scratch) and expanded a root filesystem archive to create its contents (rootfs.tar.xz)</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="none" data-transition-speed="fast">
+                <h2>Slow motion replay...</h2>
+                <img width="" data-src="images/module2-docker-image-layers-2.png" alt="Image Layers 2" style="box-shadow: none; border:0" />
+                <aside class="notes">
+                    <ul>
+                        <li>Now some metadata in this layer - the maintainer.  This won't occupy space in the image (i.e. 0 bytes).</li>
+                        <li>Notice how each layer is assigned an unique ID -- this ID is made up during the Docker build process but from Docker 1.10 it repesents a hash of the actual content.</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="none" data-transition-speed="fast">
+                <h2>Slow motion replay...</h2>
+                <img width="" data-src="images/module2-docker-image-layers-3.png" alt="Image Layers 3" style="box-shadow: none; border:0" />
+                <aside class="notes">
+                    <ul>
+                        <li>You can execute commands too, for example, install OS packages and dependencies</li>
+                        <li>To minimise the creation of layers you can use the double-ampersand operator to conjoin statements (i.e. &amp;&amp;)</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section data-transition="none" data-transition-speed="fast">
+                <h2>Slow motion replay...</h2>
+                <img width="" data-src="images/module2-docker-image-layers-4.png" alt="Image Layers 4" style="box-shadow: none; border:0" />
+                <aside class="notes">
+                    More metadata: the port(s) we intend to expose services on inside the container.
+                </aside>
+            </section>
+
+            <section data-transition="none" data-transition-speed="fast">
+                <h2>Slow motion replay...</h2>
+                <img width="" data-src="images/module2-docker-image-layers-5.png" alt="Image Layers 5" style="box-shadow: none; border:0" />
+                <p><small><strong>Note</strong>: Docker 1.10 no longer uses a randomly generated UUID for layers -- this is replaced by a <a href="https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#content-addressable-storage" target="_blank">secure content hash</a></small></p>
+                <aside class="notes">
+                    More metadata: finally, we have the default command to execute we we create a container from this image.  That is, we want to run the Nginx server.
+                </aside>
+            </section>
+
+
+            <section>
+                <h2>Docker Registries</h2>
+                <ul>
+                    <li class="fragment">The artefact repository for images is called a Docker Registry</li>
+                    <li class="fragment">You can find and retrieve images with <code>docker search</code>(*) and <code>docker pull</code>, respectively</li>
+                    <li class="fragment">You can publish your own images with <code>docker push</code></li>
+                    <li class="fragment">The default registry used by Docker is the cloud-based <strong><a href="https://hub.docker.com/" target="_blank">Docker Hub</a></strong> (supporting public and private repositories)</li>
+                    <li class="fragment">Other options include: <a href="https://docs.docker.com/registry/" target="_blank">Docker Registry 2.0</a>,
+                        <a href="https://docs.docker.com/docker-trusted-registry/" target="_blank">Docker Trusted Registry</a>,
+                        <a href="https://www.jfrog.com/confluence/display/RTF/Docker+Repositories" target="_blank">Artifactory</a>,
+                        <a href="https://books.sonatype.com/nexus-book/3.0/reference/docker.html" target="_blank">Nexus</a>,
+                        <a href="https://cloud.google.com/tools/container-registry/" target="_blank">Docker Container Registry</a>,
+                        and <a href="https://quay.io/" target="_blank">Quay.io</a><p/>
+                        <small>(*) <code>docker search</code> only searches the Docker Hub but you can still search via the registry HTTP API</small></li>
+                    </ul>
+                    <p/>
+                    <aside class="notes">
+                        Docker Trusted Registry builds on the Docker Registry 2.x but is a commercially supported product with additional features and a fancy UI.
+                        Features include:
+                        <ul>
+                            <li>Self-host on-prem or in cloud</li>
+                            <li>Search/browse images with a proper UI</li>
+                            <li>AD/LDAP integration</li>
+                            <li>Role-based Access Control; private and public repos</li>
+                            <li>Paid subscription for support</li>
+                            <li>Integrated Content Trust - signed images are validated automatically against publisher certificates</li>
+                        </ul>
+                        See: https://www.docker.com/products/docker-trusted-registry
+
+                    </aside>
+            </section>
+
+            <section>
+                <h2>Docker architecture</h2>
+                <img width="1400" data-src="images/module1-docker-architecture.svg" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+                <small style="padding-top : 40px">Image source: https://docs.docker.com/introduction/understanding-docker/</small>
+            </section>
+
+            <section id="module-2" class="title">
+                <h1>Topic 2</h1>
+                <h3>How to use docker in our projects</h3>
+            </section>
+
+            <section>
+                <h2>Docker images as build artefacts</h2>
+                <ul>
+                    <li>image is the new build artefact</li>
+                    <li>Same image goes from Dev -> QA -> Prod</li>
+                    <img width="1100" data-src="images/module1-container-factory.png" alt="Problem with multiple stack" style="border:0;box-shadow:none" />
+                </ul>
+            </section>
+
+
+            <section>
+                <h2>Auto scaling now</h2>
+                <img width="1400" data-src="images/suncorp-autoscaling-old.png" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+                <h2>Auto scaling use docker</h2>
+                <img width="1400" data-src="images/suncorp-autoscaling-docker.png" style="border:0;box-shadow:none" />
+            </section>
+
+            <section>
+  				<h2> The End </h2>
+			</section>
+
+            <!-- END OF TUTORIAL SLIDES -->
+
+        </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        hideAddressBar: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        minScale: 0.5,
+        maxScale: 2, // Give us some headroom to zoom in
+
+        // Optional reveal.js plugins
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true },
+            { src: 'plugin/notes/notes.js', async: true }
+        ]
+    });
+
+    </script>
+
+</body>
+</html>
